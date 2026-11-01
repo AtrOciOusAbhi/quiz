@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICAR-JRF Plant Science CBT Mock Test: Mendelian Genetics & Extensions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    /* Custom scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .custom-radio input[type="radio"]:checked + label {
+      border-color: #2563eb;
+      background-color: #eff6ff;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col select-none">
+
+  <!-- Header Banner -->
+  <header class="bg-gradient-to-r from-emerald-800 via-teal-800 to-cyan-900 text-white shadow-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap justify-between items-center gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+          <i class="fa-solid fa-dna text-emerald-300 text-xl"></i>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold tracking-tight leading-snug">ICAR AIEEA-PG (JRF) PLANT SCIENCES EXAM</h1>
+          <p class="text-xs text-emerald-200">Unit: Transmission Genetics (Mendelism & Extensions) • Total 45 MCQs (180 Marks)</p>
+        </div>
+      </div>
+      
+      <!-- Live Timer & Actions -->
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-black/30 border border-white/15 px-3 py-1.5 rounded-lg shadow-inner">
+          <i class="fa-regular fa-clock text-amber-300 text-sm animate-pulse"></i>
+          <span class="text-xs text-slate-300 font-medium hidden sm:inline">Time Left:</span>
+          <span id="timerDisplay" class="mono text-base sm:text-lg font-bold text-amber-300 tracking-wider">45:00</span>
+        </div>
+        <button id="endExamTopBtn" onclick="confirmSubmitModal()" class="bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded shadow transition">
+          <i class="fa-solid fa-check-double mr-1"></i> Submit Test
+        </button>
+      </div>
+    </div>
+
+    <!-- Sub-bar info -->
+    <div class="bg-emerald-950/80 border-t border-emerald-700/40 text-[11px] sm:text-xs text-emerald-200 px-4 py-1 flex justify-between items-center">
+      <span>Marking Scheme: <b class="text-emerald-300">+4</b> Correct | <b class="text-rose-300">-1</b> Negative | <b class="text-slate-300">0</b> Blank</span>
+      <span>Target: ICAR-JRF / SRF / ASRB-NET</span>
+    </div>
+  </header>
+
+  <!-- Main CBT Layout -->
+  <main class="flex-1 max-w-7xl mx-auto w-full p-2 sm:p-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+    
+    <!-- Left Pane: Question Section (8 cols on lg) -->
+    <section class="lg:col-span-8 flex flex-col bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden min-h-[580px]">
+      
+      <!-- Question Header -->
+      <div class="bg-slate-50 border-b border-slate-200 px-4 py-3 flex justify-between items-center flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <span class="bg-emerald-700 text-white font-bold text-xs px-2.5 py-1 rounded">Q.<span id="currentQNum">1</span></span>
+          <span id="questionTopicBadge" class="bg-sky-100 text-sky-800 text-[11px] font-semibold px-2 py-0.5 rounded border border-sky-200">Mendelism</span>
+        </div>
+        <div class="flex items-center gap-3 text-xs">
+          <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-1 rounded border border-emerald-200">+4.00</span>
+          <span class="text-rose-700 font-semibold bg-rose-50 px-2 py-1 rounded border border-rose-200">-1.00</span>
+        </div>
+      </div>
+
+      <!-- Question Text & Interaction Area -->
+      <div class="p-4 sm:p-6 flex-1 overflow-y-auto" id="questionContentArea">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Action Footer Buttons -->
+      <div class="bg-slate-50 border-t border-slate-200 p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <button onclick="markForReview()" class="px-3.5 py-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-300 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5">
+            <i class="fa-regular fa-bookmark"></i>
+            <span class="hidden sm:inline">Mark for</span> Review & Next
+          </button>
+          <button onclick="clearResponse()" class="px-3.5 py-2 bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 rounded-lg text-xs sm:text-sm font-semibold transition">
+            Clear Response
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="navigateQuestion(-1)" id="prevBtn" class="px-3.5 py-2 bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 rounded-lg text-xs sm:text-sm font-semibold transition disabled:opacity-40">
+            <i class="fa-solid fa-chevron-left mr-1"></i> Previous
+          </button>
+          <button onclick="saveAndNext()" id="nextBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white rounded-lg text-xs sm:text-sm font-semibold shadow transition flex items-center gap-1.5">
+            Save & Next <i class="fa-solid fa-chevron-right ml-1"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Pane: Question Palette & Overview (4 cols on lg) -->
+    <aside class="lg:col-span-4 flex flex-col gap-3">
+      
+      <!-- Candidate & Summary Card -->
+      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-2.5 mb-2.5">
+          <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-sm border border-emerald-300">
+            JRF
+          </div>
+          <div>
+            <div class="font-bold text-sm text-slate-800">ICAR Plant Sciences Mock</div>
+            <div class="text-[11px] text-slate-500">Mendelism & Genetic Interactions</div>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-600">
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded bg-emerald-600 text-white font-bold flex items-center justify-center text-[9px]" id="statAnswered">0</span>
+            <span>Answered</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded bg-rose-500 text-white font-bold flex items-center justify-center text-[9px]" id="statNotAnswered">45</span>
+            <span>Not Answered</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded bg-purple-600 text-white font-bold flex items-center justify-center text-[9px]" id="statMarked">0</span>
+            <span>Marked for Review</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded bg-purple-600 ring-2 ring-emerald-500 text-white font-bold flex items-center justify-center text-[9px]" id="statAnsMarked">0</span>
+            <span>Ans & Marked</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Palette Grid -->
+      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col">
+        <div class="flex justify-between items-center mb-2">
+          <h2 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Question Palette (45 Qs)</h2>
+          <span class="text-[10px] text-slate-500">Click number to jump</span>
+        </div>
+        
+        <div id="paletteGrid" class="grid grid-cols-5 sm:grid-cols-9 lg:grid-cols-5 gap-1.5 overflow-y-auto max-h-[380px] p-1">
+          <!-- Dynamic 45 buttons -->
+        </div>
+
+        <!-- Palette Bottom Action -->
+        <div class="mt-4 pt-3 border-t border-slate-200">
+          <button onclick="confirmSubmitModal()" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99] text-white rounded-lg font-bold text-xs sm:text-sm shadow transition">
+            <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Final Test Submit
+          </button>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- Modal: Confirmation Prompt -->
+  <div id="confirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl border border-slate-200 transform transition-all animate-in fade-in zoom-in duration-150">
+      <div class="text-center mb-4">
+        <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3 class="text-lg font-bold text-slate-800">Submit Assessment?</h3>
+        <p class="text-xs text-slate-500">Please review your attempt summary before concluding the exam.</p>
+      </div>
+
+      <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 mb-4 text-xs space-y-1.5">
+        <div class="flex justify-between text-slate-600"><span>Total Questions:</span><b class="text-slate-800">45</b></div>
+        <div class="flex justify-between text-emerald-700"><span>Answered:</span><b id="modalAnsCount">0</b></div>
+        <div class="flex justify-between text-rose-600"><span>Unanswered / Skipped:</span><b id="modalUnansCount">45</b></div>
+        <div class="flex justify-between text-purple-700"><span>Marked for Review:</span><b id="modalMarkCount">0</b></div>
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="closeConfirmModal()" class="flex-1 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-semibold rounded-lg transition">Resume Exam</button>
+        <button onclick="finalizeAndScoreExam()" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow transition">Yes, Submit Final</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Score & Review Modal / View -->
+  <div id="resultModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 hidden overflow-y-auto p-2 sm:p-6 flex justify-center">
+    <div class="bg-white rounded-2xl max-w-5xl w-full my-auto shadow-2xl border border-slate-200 flex flex-col max-h-[92vh]">
+      
+      <!-- Result Modal Header -->
+      <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-4 sm:p-6 rounded-t-2xl flex justify-between items-center">
+        <div>
+          <span class="bg-emerald-500/20 text-emerald-300 text-[11px] font-bold px-2 py-0.5 rounded border border-emerald-400/30 uppercase">Test Performance Report</span>
+          <h2 class="text-lg sm:text-2xl font-black mt-1">ICAR AIEEA-PG: Mendelian Genetics Scorecard</h2>
+        </div>
+        <button onclick="closeResultModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Result Stats Overview Grid -->
+      <div class="p-4 sm:p-6 overflow-y-auto flex-1 space-y-6">
+        
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center">
+            <span class="text-[11px] text-emerald-700 font-semibold block">Total Score</span>
+            <div class="text-2xl sm:text-3xl font-black text-emerald-800"><span id="resScore">0</span><span class="text-xs font-normal text-emerald-600"> / 180</span></div>
+            <span class="text-[10px] text-emerald-600 font-medium" id="resPercentile">Score: 0%</span>
+          </div>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-center">
+            <span class="text-[11px] text-blue-700 font-semibold block">Accuracy</span>
+            <div class="text-2xl sm:text-3xl font-black text-blue-800" id="resAccuracy">0%</div>
+            <span class="text-[10px] text-blue-600 font-medium" id="resAttemptedCount">0 Attempted</span>
+          </div>
+
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center">
+            <span class="text-[11px] text-emerald-700 font-semibold block">Correct (+4 each)</span>
+            <div class="text-2xl sm:text-3xl font-black text-emerald-700" id="resCorrect">0</div>
+            <span class="text-[10px] text-emerald-600 font-medium">+<span id="resPosMarks">0</span> Marks</span>
+          </div>
+
+          <div class="bg-rose-50 border border-rose-200 rounded-xl p-3 text-center">
+            <span class="text-[11px] text-rose-700 font-semibold block">Incorrect (-1 each)</span>
+            <div class="text-2xl sm:text-3xl font-black text-rose-700" id="resIncorrect">0</div>
+            <span class="text-[10px] text-rose-600 font-medium">-<span id="resNegMarks">0</span> Marks</span>
+          </div>
+        </div>
+
+        <!-- Filter bar for reviews -->
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+          <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-emerald-700"></i> Detailed Answer Key & High-Yield Explanations
+          </h3>
+          <div class="flex gap-1.5 text-xs">
+            <button onclick="filterReview('all')" class="reviewFilterBtn px-2.5 py-1 rounded bg-slate-800 text-white font-medium" data-filter="all">All (45)</button>
+            <button onclick="filterReview('incorrect')" class="reviewFilterBtn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-rose-700 font-medium" data-filter="incorrect">Incorrect</button>
+            <button onclick="filterReview('unanswered')" class="reviewFilterBtn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium" data-filter="unanswered">Unanswered</button>
+            <button onclick="filterReview('correct')" class="reviewFilterBtn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-emerald-700 font-medium" data-filter="correct">Correct</button>
+          </div>
+        </div>
+
+        <!-- Solutions List Container -->
+        <div id="solutionReviewContainer" class="space-y-4">
+          <!-- Dynamically populated review cards -->
+        </div>
+
+      </div>
+
+      <!-- Result Footer -->
+      <div class="bg-slate-100 border-t border-slate-200 p-3 sm:p-4 rounded-b-2xl flex justify-between items-center">
+        <span class="text-xs text-slate-500">Based on ICAR PG Syllabus: Transmission Genetics</span>
+        <button onclick="resetAndRetakeTest()" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs sm:text-sm font-bold shadow">
+          <i class="fa-solid fa-rotate-right mr-1.5"></i> Retake Test
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    /* Question Bank: Exactly 45 Questions designed strictly on ICAR JRF Plant Science level */
+    const questions = [
+      {
+        id: 1,
+        topic: "Mendelian Genetics",
+        type: "statement",
+        text: `Given below are two statements:<br>
+        <strong>Statement I:</strong> Gregor Johann Mendel's experimental findings on garden pea (<em>Pisum sativum</em>) were published in 1866 in the proceedings of the Natural History Society of Brünn.<br>
+        <strong>Statement II:</strong> Mendel chose 7 pairs of contrasting traits located across 7 different non-homologous pairs of chromosomes.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 2,
+        explanation: "Statement I is true (published in 1866 titled 'Versuche über Pflanzen-Hybriden'). Statement II is false because the 7 traits Mendel studied in garden pea (2n=14) are actually distributed on only 4 chromosomes (Chromosomes 1, 4, 5, and 7), as later elucidated by S. Blixt (1975)."
+      },
+      {
+        id: 2,
+        topic: "Chromosomal Locations",
+        type: "match",
+        text: `Match List-I (Mendel's Pea Character) with List-II (Corresponding Chromosome Number as per Blixt):
+        <table class="w-full mt-2 border-collapse border border-slate-300 text-xs sm:text-sm">
+          <tr class="bg-slate-100"><th class="border border-slate-300 p-1.5">List-I (Trait)</th><th class="border border-slate-300 p-1.5">List-II (Chromosome)</th></tr>
+          <tr><td class="border border-slate-300 p-1">A. Seed shape (Round/Wrinkled)</td><td class="border border-slate-300 p-1">I. Chromosome 1</td></tr>
+          <tr><td class="border border-slate-300 p-1">B. Stem length / Plant height (Tall/Dwarf)</td><td class="border border-slate-300 p-1">II. Chromosome 7</td></tr>
+          <tr><td class="border border-slate-300 p-1">C. Seed coat color / Flower color</td><td class="border border-slate-300 p-1">III. Chromosome 4</td></tr>
+          <tr><td class="border border-slate-300 p-1">D. Pod color (Green/Yellow)</td><td class="border border-slate-300 p-1">IV. Chromosome 5</td></tr>
+        </table>`,
+        options: [
+          "A-II, B-III, C-I, D-IV",
+          "A-I, B-III, C-II, D-IV",
+          "A-II, B-IV, C-I, D-III",
+          "A-IV, B-III, C-I, D-II"
+        ],
+        correct: 0,
+        explanation: "In Pisum sativum (2n=14): Seed shape (R/r - starch branching enzyme SBEI) is on Chromosome 7; Plant height (Le/le - gibberellin 3-beta-hydroxylase) and Pod shape (V/v) are on Chromosome 4; Seed coat/Flower color (A/a) & Cotyledon color (I/i) are on Chromosome 1; Pod color (Gp/gp) is on Chromosome 5. Hence A-II, B-III, C-I, D-IV."
+      },
+      {
+        id: 3,
+        topic: "Formulas in F2 Population",
+        type: "match",
+        text: `Match List-I with List-II regarding the theoretical expectations in an F2 generation for 'n' independently segregating gene pairs:
+        <table class="w-full mt-2 border-collapse border border-slate-300 text-xs sm:text-sm">
+          <tr class="bg-slate-100"><th class="border border-slate-300 p-1.5">List-I (Particulars)</th><th class="border border-slate-300 p-1.5">List-II (Formula)</th></tr>
+          <tr><td class="border border-slate-300 p-1">A. Number of different phenotypic classes (complete dominance)</td><td class="border border-slate-300 p-1">I. 4<sup>n</sup></td></tr>
+          <tr><td class="border border-slate-300 p-1">B. Total number of individuals in a perfect minimum F2 population</td><td class="border border-slate-300 p-1">II. 2<sup>n</sup></td></tr>
+          <tr><td class="border border-slate-300 p-1">C. Number of distinct genotypic classes in F2</td><td class="border border-slate-300 p-1">III. 3<sup>n</sup> - 2<sup>n</sup></td></tr>
+          <tr><td class="border border-slate-300 p-1">D. Number of heterozygous genotypic classes in F2</td><td class="border border-slate-300 p-1">IV. 3<sup>n</sup></td></tr>
+        </table>`,
+        options: [
+          "A-II, B-I, C-IV, D-III",
+          "A-II, B-I, C-III, D-IV",
+          "A-I, B-II, C-IV, D-III",
+          "A-IV, B-I, C-II, D-III"
+        ],
+        correct: 0,
+        explanation: "As frequently asked in ICAR PG Plant Sciences (see 2023 PYQ Q29): Phenotypic classes = 2^n; Minimum perfect F2 population size = 4^n; Total number of genotypes = 3^n; Number of completely homozygous genotypes = 2^n; therefore, heterozygous genotypes = 3^n - 2^n."
+      },
+      {
+        id: 4,
+        topic: "Epistasis Ratios",
+        type: "mcq",
+        text: "In summer squash (<em>Cucurbita pepo</em>), fruit color is governed by two non-allelic genes. The dominant allele <em>W</em> masks the expression of yellow (<em>Y</em>) and green (<em>y</em>) fruit colors, yielding white fruit. In the absence of <em>W</em>, <em>Y-</em> produces yellow fruits and <em>yy</em> produces green fruits. The expected F2 phenotypic ratio from a dihybrid cross (<em>WwYy &times; WwYy</em>) is:",
+        options: [
+          "9 : 3 : 4",
+          "12 : 3 : 1",
+          "13 : 3",
+          "15 : 1"
+        ],
+        correct: 1,
+        explanation: "This is classic Dominant Epistasis (Masking gene action). W_Y_ (9) and W_yy (3) are White (total 12 White); wwY_ (3) are Yellow; wwyy (1) is Green. Phenotypic ratio = 12 : 3 : 1."
+      },
+      {
+        id: 5,
+        topic: "Complementary Genes",
+        type: "statement",
+        text: `Given below are two statements regarding Complementary Gene interaction:<br>
+        <strong>Statement I:</strong> Bateson and Punnett discovered the complementary gene interaction (9:7 ratio) in sweet pea (<em>Lathyrus odoratus</em>) for flower color governed by genes <em>C</em> and <em>P</em>.<br>
+        <strong>Statement II:</strong> The test cross ratio of a complementary gene interaction is 1:1:1:1.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 2,
+        explanation: "Statement I is true (Bateson & Punnett 1906, purple flowers requiring both C and P dominant alleles, yielding 9 purple : 7 white in F2). Statement II is false because the test cross (CcPp &times; ccpp) yields 1 CcPp (colored) : 3 (Ccpp, ccPp, ccpp - colorless), i.e., a 1:3 test cross ratio."
+      },
+      {
+        id: 6,
+        topic: "Duplicate Dominant Epistasis",
+        type: "mcq",
+        text: "In shepherd's purse (<em>Capsella bursa-pastoris</em>), triangular fruit shape is produced by dominant alleles of either of two independently segregating loci <em>T1</em> or <em>T2</em>. An ovoid capsule occurs only when both loci are homozygous recessive (<em>t1t1t2t2</em>). The F2 segregation ratio of 15:1 is an example of:",
+        options: [
+          "Duplicate genes with cumulative effect",
+          "Duplicate dominant epistasis (Duplicate genes)",
+          "Recessive epistasis (Supplementary genes)",
+          "Inhibitory gene interaction"
+        ],
+        correct: 1,
+        explanation: "15:1 is the characteristic ratio of Duplicate Dominant Epistasis (George Shull, 1914 in Capsella bursa-pastoris), where either dominant allele (T1- or T2-) produces the dominant phenotype."
+      },
+      {
+        id: 7,
+        topic: "Supplementary Gene Action",
+        type: "mcq",
+        text: "In mice, coat color is governed by two genes: Gene <em>C</em> is essential for the production of pigment (recessive <em>cc</em> causes albino), whereas gene <em>A</em> converts black pigment into agouti. When agouti mice of genotype <em>CcAa</em> are selfed, the F2 phenotypic ratio will be:",
+        options: [
+          "9 Agouti : 3 Black : 4 Albino",
+          "9 Agouti : 6 Black : 1 Albino",
+          "12 Agouti : 3 Black : 1 Albino",
+          "9 Agouti : 7 Albino"
+        ],
+        correct: 0,
+        explanation: "This is Recessive Epistasis (Supplementary gene action, 9:3:4). C_A_ (9) = Agouti; C_aa (3) = Black; ccA_ (3) and ccaa (1) = Albino (due to epistatic recessive homozygous cc condition, total 4 albino)."
+      },
+      {
+        id: 8,
+        topic: "Inhibitory Gene Action",
+        type: "statement",
+        text: `Given below are two statements regarding Inhibitory Gene Interaction:<br>
+        <strong>Statement I:</strong> In poultry feather color or rice anthocyanin pigmentation, inhibitory gene action yields an F2 ratio of 13:3.<br>
+        <strong>Statement II:</strong> In an inhibitory gene interaction, the test cross of a dihybrid (<em>IiCc &times; iicc</em>) produces a phenotypic ratio of 3:1.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 0,
+        explanation: "Both statements are correct. In inhibitory gene action (13:3 in F2), a dominant inhibitor I suppresses dominant allele C. The test cross (IiCc &times; iicc) gives IiCc (inhibited/white), Iicc (white), iicc (white), and only iiCc (colored) -> 3 colorless : 1 colored (3:1 ratio)."
+      },
+      {
+        id: 9,
+        topic: "Cumulative Duplicate Genes",
+        type: "mcq",
+        text: "In barley or summer squash, when two genes produce identical phenotypes individually, but when present together their effect is additive or cumulative, the F2 ratio obtained is:",
+        options: [
+          "9 : 6 : 1",
+          "9 : 3 : 4",
+          "15 : 1",
+          "12 : 3 : 1"
+        ],
+        correct: 0,
+        explanation: "Duplicate genes with cumulative effect produce a 9:6:1 F2 ratio (e.g., disc-shaped fruit 9/16, spherical fruit 6/16, long fruit 1/16 in Cucurbita pepo)."
+      },
+      {
+        id: 10,
+        topic: "Probability & Polyhybrid",
+        type: "numerical",
+        text: "In a cross between two individuals with genotypes <strong>AaBbCcDd</strong> &times; <strong>AaBbCcDd</strong> (assuming independent assortment and complete dominance for all 4 loci), what is the probability of recovering an offspring with the genotype <strong>AABBccDd</strong>?",
+        options: [
+          "1 / 64",
+          "1 / 128",
+          "1 / 256",
+          "3 / 256"
+        ],
+        correct: 1,
+        explanation: "P(AA) from Aa &times; Aa = 1/4; P(BB) from Bb &times; Bb = 1/4; P(cc) from Cc &times; Cc = 1/4; P(Dd) from Dd &times; Dd = 2/4 = 1/2. Overall probability = (1/4) &times; (1/4) &times; (1/4) &times; (1/2) = 1/128."
+      },
+      {
+        id: 11,
+        topic: "Gamete Probability",
+        type: "numerical",
+        text: "From a parent with genotype <strong>AaBbCCDdEE</strong> (all loci segregating independently), what is the probability that a randomly chosen gamete carries the allele combination <strong>AbCdE</strong>?",
+        options: [
+          "1 / 4",
+          "1 / 8",
+          "1 / 16",
+          "1 / 32"
+        ],
+        correct: 1,
+        explanation: "P(A or a) = 1/2 -> P(b) = 1/2; P(C from CC) = 1; P(d from Dd) = 1/2; P(E from EE) = 1. Number of heterozygous loci n = 3 (Aa, Bb, Dd). Probability of any specific combination = (1/2)^3 = 1/8."
+      },
+      {
+        id: 12,
+        topic: "Lethal Genes",
+        type: "assertion",
+        text: `Given below are two statements, one is labelled as Assertion (A) and the other as Reason (R):<br>
+        <strong>Assertion (A):</strong> When two yellow-coated mice are crossed together, they consistently produce yellow and agouti mice in a 2:1 ratio instead of the expected 3:1 Mendelian ratio.<br>
+        <strong>Reason (R):</strong> The dominant allele for yellow body color (<em>Y</em>) is recessive lethal in homozygous condition (<em>YY</em>) causing death during early embryonic development.`,
+        options: [
+          "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+          "Both (A) and (R) are correct but (R) is NOT the correct explanation of (A)",
+          "(A) is correct but (R) is not correct",
+          "(A) is not correct but (R) is correct"
+        ],
+        correct: 0,
+        explanation: "Both (A) and (R) are true, and (R) explains (A). Discovered by Lucien Cuénot (1905), the yellow coat gene in mice (Ay) causes yellow coat in heterozygous (Ay/a) state, but homozygotes (Ay/Ay) die in utero, modifying the F2 ratio to 2 yellow : 1 agouti."
+      },
+      {
+        id: 13,
+        topic: "Chi-Square Test",
+        type: "numerical",
+        text: "A geneticist crosses two heterozygous tall pea plants (<em>Tt &times; Tt</em>) and recovers 30 tall and 10 dwarf progeny in F2. What is the calculated chi-square (&chi;<sup>2</sup>) value for testing the goodness of fit to the theoretical 3:1 ratio?",
+        options: [
+          "0.00",
+          "0.33",
+          "1.00",
+          "3.84"
+        ],
+        correct: 0,
+        explanation: "Total progeny = 40. Expected numbers for 3:1 ratio: Tall = (3/4)*40 = 30; Dwarf = (1/4)*40 = 10. Observed: Tall = 30, Dwarf = 10. &chi;^2 = &Sigma;(O-E)^2/E = (30-30)^2/30 + (10-10)^2/10 = 0/30 + 0/10 = 0.00. Perfect fit!"
+      },
+      {
+        id: 14,
+        topic: "Chi-Square Principles",
+        type: "statement",
+        text: `Given below are two statements regarding the Chi-square (&chi;<sup>2</sup>) test of goodness-of-fit:<br>
+        <strong>Statement I:</strong> Yates' correction for continuity is applied when degrees of freedom (df) is equal to 1 and the expected class frequency is small.<br>
+        <strong>Statement II:</strong> In a dihybrid cross segregating into four phenotypic classes (9:3:3:1), the degrees of freedom for the chi-square test is 4.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 2,
+        explanation: "Statement I is true (Frank Yates introduced Yates' correction (|O-E| - 0.5)^2 / E for 1 df with small numbers). Statement II is false because degrees of freedom df = k - 1, where k is number of phenotypic classes. For 4 classes, df = 4 - 1 = 3, not 4."
+      },
+      {
+        id: 15,
+        topic: "Pleiotropy",
+        type: "mcq",
+        text: "Which of the following is a classic example of pleiotropy studied by Gregor Mendel in <em>Pisum sativum</em>?",
+        options: [
+          "A single gene (<em>A</em>) controlling both purple flower color, grey-brown seed coat, and reddish spots in leaf axils",
+          "Starch branching enzyme gene (<em>R</em>) controlling cotyledon color and pod length",
+          "Internode length gene (<em>Le</em>) controlling pod shape and leaf venation",
+          "A single gene controlling chlorophyll content and terminal flower position"
+        ],
+        correct: 0,
+        explanation: "Mendel observed that plants with purple flowers always had pigmented (grey/brown) seed coats and purple/reddish marks in leaf axils, whereas white-flowered plants lacked seed coat pigmentation and axil spots. This trait is controlled by the single pleiotropic gene A (bHLH transcription factor)."
+      },
+      {
+        id: 16,
+        topic: "Penetrance & Expressivity",
+        type: "statement",
+        text: `Given below are two statements:<br>
+        <strong>Statement I:</strong> Penetrance is the percentage of individuals with a given genotype who exhibit the associated phenotype.<br>
+        <strong>Statement II:</strong> Expressivity refers to the degree or severity to which a given genotype is expressed phenotypically in an individual.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 0,
+        explanation: "Both statements are textbook definitions. Penetrance is an all-or-none statistical measure of genotype expression in a population, whereas Expressivity is the qualitative or quantitative degree of trait manifestation."
+      },
+      {
+        id: 17,
+        topic: "Phenocopy",
+        type: "mcq",
+        text: "An environmentally induced non-hereditary phenotypic modification that closely mimics a phenotype caused by a specific gene mutation is termed as:",
+        options: [
+          "Genocopy",
+          "Phenocopy",
+          "Pleiotropy",
+          "Atavism"
+        ],
+        correct: 1,
+        explanation: "Phenocopy (a term coined by Richard Goldschmidt in 1935) refers to an environmentally induced variation that resembles the phenotype produced by a known mutant gene, but is not genetically transmitted."
+      },
+      {
+        id: 18,
+        topic: "Pseudoallelism",
+        type: "statement",
+        text: `Given below are two statements regarding Pseudoalleles:<br>
+        <strong>Statement I:</strong> Pseudoalleles are closely linked genes that perform similar functions and can undergo rare crossing over between them.<br>
+        <strong>Statement II:</strong> In Drosophila, C. P. Oliver (1940) demonstrated that the lozenge (<em>lz</em>) locus consists of sub-elements that can recombine, disproving the bead-on-a-string concept of an indivisible gene.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 0,
+        explanation: "Both statements are true. Oliver (1940) discovered recombination within the lozenge locus of Drosophila melanogaster, demonstrating that genes are divisible by crossing over (which was later extensively detailed by Seymour Benzer using T4 phage)."
+      },
+      {
+        id: 19,
+        topic: "Multiple Alleles",
+        type: "mcq",
+        text: "For a gene locus with 'n' multiple alleles in a diploid species, the theoretical maximum number of distinct genotypes and heterozygous genotypes possible in a population are respectively given by:",
+        options: [
+          "n(n+1)/2 and n(n-1)/2",
+          "n(n-1)/2 and n(n+1)/2",
+          "2^n and 3^n",
+          "n^2 and n(n-1)"
+        ],
+        correct: 0,
+        explanation: "Total genotypes = n(n+1)/2, of which homozygous genotypes = n. Thus, heterozygous genotypes = [n(n+1)/2] - n = n(n-1)/2."
+      },
+      {
+        id: 20,
+        topic: "Rabbit Coat Color",
+        type: "mcq",
+        text: "In rabbits, coat color is governed by multiple alleles with the dominance hierarchy: Agouti (<em>C</em>) > Chinchilla (<em>c<sup>ch</sup></em>) > Himalayan (<em>c<sup>h</sup></em>) > Albino (<em>c</em>). What phenotypic proportions are expected from a cross between a Chinchilla carrier for albino (<em>c<sup>ch</sup>c</em>) and a Himalayan carrier for albino (<em>c<sup>h</sup>c</em>)?",
+        options: [
+          "2 Chinchilla : 1 Himalayan : 1 Albino",
+          "1 Chinchilla : 2 Himalayan : 1 Albino",
+          "3 Chinchilla : 1 Albino",
+          "1 Chinchilla : 1 Himalayan : 2 Albino"
+        ],
+        correct: 0,
+        explanation: "Cross: c^ch c &times; c^h c. Progeny genotypes: c^ch c^h (Chinchilla, since c^ch > c^h), c^ch c (Chinchilla), c^h c (Himalayan), cc (Albino). Phenotype ratio = 2 Chinchilla : 1 Himalayan : 1 Albino."
+      },
+      {
+        id: 21,
+        topic: "Test Cross Ratios",
+        type: "match",
+        text: `Match List-I (Gene Interaction) with List-II (Corresponding Dihybrid Test Cross Ratio):
+        <table class="w-full mt-2 border-collapse border border-slate-300 text-xs sm:text-sm">
+          <tr class="bg-slate-100"><th class="border border-slate-300 p-1.5">List-I (Interaction)</th><th class="border border-slate-300 p-1.5">List-II (Test Cross Ratio)</th></tr>
+          <tr><td class="border border-slate-300 p-1">A. Recessive epistasis (9:3:4)</td><td class="border border-slate-300 p-1">I. 3 : 1</td></tr>
+          <tr><td class="border border-slate-300 p-1">B. Dominant epistasis (12:3:1)</td><td class="border border-slate-300 p-1">II. 1 : 2 : 1</td></tr>
+          <tr><td class="border border-slate-300 p-1">C. Complementary gene (9:7)</td><td class="border border-slate-300 p-1">III. 2 : 1 : 1</td></tr>
+          <tr><td class="border border-slate-300 p-1">D. Duplicate dominant epistasis (15:1)</td><td class="border border-slate-300 p-1">IV. 1 : 3</td></tr>
+        </table>`,
+        options: [
+          "A-II, B-III, C-IV, D-I",
+          "A-III, B-II, C-IV, D-I",
+          "A-I, B-II, C-III, D-IV",
+          "A-IV, B-III, C-II, D-I"
+        ],
+        correct: 0,
+        explanation: "Test crosses (AaBb &times; aabb): Recessive epistasis gives 1 AaBb : 1 Aabb : 2 (aaBb + aabb) -> 1:1:2 or 1:2:1; Dominant epistasis gives 2 (AaBb + Aabb) : 1 aaBb : 1 aabb -> 2:1:1; Complementary genes give 1 AaBb : 3 (Aabb + aaBb + aabb) -> 1:3; Duplicate dominant gives 3 (AaBb + Aabb + aaBb) : 1 aabb -> 3:1. Hence A-II, B-III, C-IV, D-I."
+      },
+      {
+        id: 22,
+        topic: "ABO Blood Group Genetics",
+        type: "numerical",
+        text: "A man with blood group A whose father had blood group O marries a woman with blood group B whose mother had blood group O. What is the probability that their first child will have blood group O?",
+        options: [
+          "1 / 2",
+          "1 / 4",
+          "1 / 8",
+          "1 / 16"
+        ],
+        correct: 1,
+        explanation: "The man is I^A i (since father is O, ii). The woman is I^B i (since mother is O, ii). Cross: I^A i &times; I^B i -> 1/4 I^A I^B (AB), 1/4 I^A i (A), 1/4 I^B i (B), 1/4 ii (O). The probability of having a child with blood group O is 1/4."
+      },
+      {
+        id: 23,
+        topic: "Self-Incompatibility Alleles",
+        type: "mcq",
+        text: "In gametophytic self-incompatibility (GSI) governed by multiple S-alleles, what will be the outcome of pollination when a pistil of genotype <strong>S1S2</strong> is pollinated by pollen grains from a plant of genotype <strong>S2S3</strong>?",
+        options: [
+          "100% of the pollen grains will germinate and effect fertilization",
+          "None of the pollen grains will germinate (complete incompatibility)",
+          "Only S3 pollen grains will be compatible and fertilize the ovules (50% successful)",
+          "Only S2 pollen grains will be compatible and fertilize the ovules"
+        ],
+        correct: 2,
+        explanation: "In gametophytic SI, the pollen phenotype is determined by its own haploid S-allele. Pollen carrying S2 is inhibited by the S1S2 style, whereas pollen carrying S3 is compatible and successfully effects fertilization (yielding S1S3 and S2S3 zygotes)."
+      },
+      {
+        id: 24,
+        topic: "Cis-Trans Position Effect",
+        type: "statement",
+        text: `Given below are two statements regarding Cis-Trans Position Effect:<br>
+        <strong>Statement I:</strong> When two recessive mutant alleles produce a mutant phenotype in trans-heterozygote (<em>a + / + b</em>) but a wild-type phenotype in cis-heterozygote (<em>a b / + +</em>), they belong to the same cistron (pseudoallelic locus).<br>
+        <strong>Statement II:</strong> If both cis and trans heterozygotes display a mutant phenotype, the mutations are dominant.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 0,
+        explanation: "Both statements are scientifically correct. The cis-trans complementation test by E.B. Lewis establishes that non-complementing mutants (mutant in trans) belong to the same functional unit (cistron). If a mutation is dominant, trans will always be mutant."
+      },
+      {
+        id: 25,
+        topic: "Mendelian Law of Segregation",
+        type: "assertion",
+        text: `Given below are two statements, one is labelled as Assertion (A) and the other as Reason (R):<br>
+        <strong>Assertion (A):</strong> Mendel's Law of Segregation (Purity of Gametes) is considered universally valid in sexually reproducing diploid organisms without exceptions under normal meiotic disjunction.<br>
+        <strong>Reason (R):</strong> Alleles residing in a heterozygous individual do not blend or contaminate each other and separate cleanly into distinct gametes during anaphase-I of meiosis.`,
+        options: [
+          "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+          "Both (A) and (R) are correct but (R) is NOT the correct explanation of (A)",
+          "(A) is correct but (R) is not correct",
+          "(A) is not correct but (R) is correct"
+        ],
+        correct: 0,
+        explanation: "Unlike the Law of Independent Assortment (which is violated by genetic linkage), the Law of Segregation has no exception in normal meiosis because homologous chromosomes carrying different alleles cleanly segregate during anaphase-I."
+      },
+      {
+        id: 26,
+        topic: "Testing Genetic Hypothesis",
+        type: "statement",
+        text: `Given below are two statements:<br>
+        <strong>Statement I:</strong> A high chi-square value (&chi;<sup>2</sup>) with p < 0.05 indicates that the deviations between observed and expected frequencies are due to random sampling fluctuations alone.<br>
+        <strong>Statement II:</strong> In genetic hypothesis testing, the Null Hypothesis (H<sub>0</sub>) states that there is no significant difference between the observed and expected values.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 3,
+        explanation: "Statement I is false because a high chi-square with p < 0.05 leads to REJECTION of the null hypothesis, indicating significant deviation NOT due to chance alone. Statement II is true (definition of H0 in genetics)."
+      },
+      {
+        id: 27,
+        topic: "Duplicate Genes with Cumulative Effect",
+        type: "numerical",
+        text: "In an organism where two genes exhibit duplicate gene action with cumulative effect (9:6:1), an individual of genotype <strong>AaBb</strong> is crossed with an individual of genotype <strong>aabb</strong>. What will be the expected phenotypic ratio in the progeny?",
+        options: [
+          "1 : 2 : 1",
+          "1 : 1 : 1 : 1",
+          "3 : 1",
+          "9 : 3 : 4"
+        ],
+        correct: 0,
+        explanation: "AaBb &times; aabb produces 1 AaBb (both dominant alleles = class 1) : 1 Aabb (one dominant allele = class 2) : 1 aaBb (one dominant allele = class 2) : 1 aabb (no dominant allele = class 3). Combining like phenotypes: 1 : 2 : 1."
+      },
+      {
+        id: 28,
+        topic: "Reciprocal Crosses",
+        type: "assertion",
+        text: `Given below are two statements, one is labelled as Assertion (A) and the other as Reason (R):<br>
+        <strong>Assertion (A):</strong> Mendel's monohybrid crosses gave identical phenotypic and genotypic results in F1 and F2 irrespective of whether a trait was contributed by the male or female parent.<br>
+        <strong>Reason (R):</strong> The 7 characters studied by Mendel in pea are encoded by nuclear genes and exhibit biparental autosomal transmission.`,
+        options: [
+          "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+          "Both (A) and (R) are correct but (R) is NOT the correct explanation of (A)",
+          "(A) is correct but (R) is not correct",
+          "(A) is not correct but (R) is correct"
+        ],
+        correct: 0,
+        explanation: "Reciprocal crosses yield identical progeny phenotypes when traits are controlled by autosomal nuclear genes, which proved Mendel's postulate of equal parental genetic contribution."
+      },
+      {
+        id: 29,
+        topic: "Trihybrid Cross Statistics",
+        type: "numerical",
+        text: "In a trihybrid self-cross (<em>AaBbCc &times; AaBbCc</em>) assuming independent assortment and complete dominance for all three loci, what is the total number of distinct genotypes, and what fraction of the progeny will be completely homozygous at all three loci?",
+        options: [
+          "27 distinct genotypes, and 1/8 homozygous",
+          "64 distinct genotypes, and 1/64 homozygous",
+          "27 distinct genotypes, and 1/27 homozygous",
+          "8 distinct genotypes, and 1/8 homozygous"
+        ],
+        correct: 0,
+        explanation: "Number of genotypes = 3^n = 3^3 = 27. The probability of being homozygous at locus A is (1/4 AA + 1/4 aa) = 1/2. Across three independent loci, the proportion of complete homozygotes = (1/2)^3 = 1/8 (which equals 8/64, i.e., 2^n / 4^n)."
+      },
+      {
+        id: 30,
+        topic: "Epistasis Terminology",
+        type: "match",
+        text: `Match List-I (Gene Interaction) with List-II (Classic Biological Example):
+        <table class="w-full mt-2 border-collapse border border-slate-300 text-xs sm:text-sm">
+          <tr class="bg-slate-100"><th class="border border-slate-300 p-1.5">List-I (Interaction)</th><th class="border border-slate-300 p-1.5">List-II (Biological Example)</th></tr>
+          <tr><td class="border border-slate-300 p-1">A. Complementary genes (9:7)</td><td class="border border-slate-300 p-1">I. Fruit color in <em>Cucurbita pepo</em></td></tr>
+          <tr><td class="border border-slate-300 p-1">B. Dominant epistasis (12:3:1)</td><td class="border border-slate-300 p-1">II. Capsule shape in <em>Capsella bursa-pastoris</em></td></tr>
+          <tr><td class="border border-slate-300 p-1">C. Duplicate dominant epistasis (15:1)</td><td class="border border-slate-300 p-1">III. Flower color in <em>Lathyrus odoratus</em></td></tr>
+          <tr><td class="border border-slate-300 p-1">D. Inhibitory gene (13:3)</td><td class="border border-slate-300 p-1">IV. Feather color in Leghorn and Wyandotte fowl</td></tr>
+        </table>`,
+        options: [
+          "A-III, B-I, C-II, D-IV",
+          "A-III, B-II, C-I, D-IV",
+          "A-II, B-I, C-III, D-IV",
+          "A-I, B-III, C-IV, D-II"
+        ],
+        correct: 0,
+        explanation: "Complementary genes (9:7) = sweet pea flower color; Dominant epistasis (12:3:1) = summer squash fruit color; Duplicate dominant genes (15:1) = Capsella bursa-pastoris capsule shape; Inhibitory gene (13:3) = fowl feather color (I and C genes). Hence A-III, B-I, C-II, D-IV."
+      },
+      {
+        id: 31,
+        topic: "Mendelian Extensions",
+        type: "statement",
+        text: `Given below are two statements:<br>
+        <strong>Statement I:</strong> Codominance is characterized by the simultaneous and full phenotypic expression of both alleles in a heterozygote without any blending.<br>
+        <strong>Statement II:</strong> The MN blood group and AB blood group in humans are classical examples of Incomplete Dominance.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 2,
+        explanation: "Statement I is true. Statement II is false because the MN blood group and AB blood group are examples of Codominance (where both M and N glycoproteins, or both A and B antigens are fully produced), not incomplete dominance."
+      },
+      {
+        id: 32,
+        topic: "Incomplete Dominance",
+        type: "mcq",
+        text: "In <em>Mirabilis jalapa</em> (four o'clock plant) or <em>Antirrhinum majus</em> (snapdragon), a cross between red-flowered (<em>RR</em>) and white-flowered (<em>rr</em>) plants produces pink-flowered (<em>Rr</em>) F1 progeny. When F1 plants are self-pollinated, the phenotypic and genotypic ratios in F2 are:",
+        options: [
+          "Phenotypic ratio 3:1, Genotypic ratio 1:2:1",
+          "Phenotypic ratio 1:2:1, Genotypic ratio 1:2:1",
+          "Phenotypic ratio 9:7, Genotypic ratio 1:2:1",
+          "Phenotypic ratio 1:1, Genotypic ratio 1:1"
+        ],
+        correct: 1,
+        explanation: "In incomplete dominance, the heterozygote has an intermediate phenotype. Therefore, both phenotypic and genotypic ratios in F2 coincide at 1 Red (RR) : 2 Pink (Rr) : 1 White (rr) (1:2:1)."
+      },
+      {
+        id: 33,
+        topic: "Gene Symbols & Conventions",
+        type: "statement",
+        text: `Given below are two statements:<br>
+        <strong>Statement I:</strong> According to standard genetic nomenclature, a plus sign (+) superscript indicates the wild-type allele at that locus.<br>
+        <strong>Statement II:</strong> If a mutant allele is dominant to the wild-type, its gene symbol is customarily written with a lowercase initial letter.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 2,
+        explanation: "Statement I is true (e.g. w+, e+ for wild-type red eyes and grey body in Drosophila). Statement II is false because dominant mutant alleles are symbolized with an uppercase initial letter (e.g., Cy for Curly, Bar for Bar eye), whereas recessive mutants use lowercase (e.g., w for white eye)."
+      },
+      {
+        id: 34,
+        topic: "Chi-Square Independence",
+        type: "numerical",
+        text: "In a 2 &times; 2 contingency table used for testing the independence of two genetic attributes, what is the degree of freedom (df)?",
+        options: [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        correct: 0,
+        explanation: "For an r &times; c contingency table, degrees of freedom df = (r - 1) &times; (c - 1). For a 2 &times; 2 table, df = (2 - 1) &times; (2 - 1) = 1."
+      },
+      {
+        id: 35,
+        topic: "Dominant Lethal Genes",
+        type: "mcq",
+        text: "Which of the following statements about Dominant Lethal alleles is INCORRECT?",
+        options: [
+          "They cause the death of the organism in both heterozygous and homozygous states",
+          "They cannot be maintained in animal breeding populations unless they have delayed onset of expression",
+          "Huntington's chorea in humans is an example of a late-onset dominant lethal disorder",
+          "Dominant lethal alleles are readily fixed in crops by self-pollination"
+        ],
+        correct: 3,
+        explanation: "Dominant lethal genes cannot be fixed by self-pollination or standard breeding because any individual carrying the allele (even in heterozygous condition) is eliminated or fails to reproduce before fixation."
+      },
+      {
+        id: 36,
+        topic: "Mendelian Pedigree Analysis",
+        type: "mcq",
+        text: "In human pedigree analysis, an autosomal recessive trait is characterized by all of the following EXCEPT:",
+        options: [
+          "The trait often skips generations",
+          "Affected offspring are frequently born to unaffected (carrier) parents",
+          "Males and females are affected with roughly equal frequencies",
+          "An affected father always transmits the trait to all of his sons"
+        ],
+        correct: 3,
+        explanation: "An affected father transmitting a trait to all of his sons is indicative of Y-linked (holandric) inheritance, not autosomal recessive inheritance."
+      },
+      {
+        id: 37,
+        topic: "Extensions: Polymeric Gene",
+        type: "statement",
+        text: `Given below are two statements regarding Polymeric Genes (9:6:1):<br>
+        <strong>Statement I:</strong> Polymeric gene interaction is also known as duplicate genes with cumulative effect.<br>
+        <strong>Statement II:</strong> In this interaction, two non-allelic genes have identical individual phenotypic expressions, but their combined presence enhances or alters the phenotype.`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 0,
+        explanation: "Both statements are correct. Polymeric gene interaction produces a 9:6:1 ratio because A_bb and aaB_ produce the same intermediate phenotype (6), while A_B_ produces the complete phenotype (9) and aabb is the base recessive (1)."
+      },
+      {
+        id: 38,
+        topic: "Chi-Square P-Value Interpretation",
+        type: "assertion",
+        text: `Given below are two statements, one is labelled as Assertion (A) and the other as Reason (R):<br>
+        <strong>Assertion (A):</strong> When testing an F2 segregation ratio of 3:1 with 1 degree of freedom, if the calculated &chi;<sup>2</sup> value is 4.52 (critical value at p=0.05 is 3.84), we reject the null hypothesis of 3:1 segregation.<br>
+        <strong>Reason (R):</strong> When calculated &chi;<sup>2</sup> exceeds the critical table value at the 5% significance level, the probability (p) that the observed deviation is due solely to chance is less than 0.05.`,
+        options: [
+          "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+          "Both (A) and (R) are correct but (R) is NOT the correct explanation of (A)",
+          "(A) is correct but (R) is not correct",
+          "(A) is not correct but (R) is correct"
+        ],
+        correct: 0,
+        explanation: "Calculated chi-square (4.52) > Critical table value (3.84). This means p < 0.05, which rejects the Null Hypothesis, confirming significant difference from the 3:1 ratio."
+      },
+      {
+        id: 39,
+        topic: "Dihybrid Cross Backcross",
+        type: "numerical",
+        text: "In garden pea, tallness (<em>T</em>) is dominant over dwarf (<em>t</em>) and yellow cotyledon (<em>Y</em>) is dominant over green (<em>y</em>). If an F1 dihybrid (<em>TtYy</em>) is backcrossed to the recessive parent (<em>ttyy</em>), what proportion of the progeny will be phenotypically Dwarf with Yellow cotyledons?",
+        options: [
+          "1 / 4 (25%)",
+          "1 / 16 (6.25%)",
+          "3 / 16 (18.75%)",
+          "1 / 2 (50%)"
+        ],
+        correct: 0,
+        explanation: "A dihybrid test cross (TtYy &times; ttyy) produces four classes with equal frequency (1:1:1:1): 25% Tall Yellow (TtYy), 25% Tall Green (Ttyy), 25% Dwarf Yellow (ttYy), and 25% Dwarf Green (ttyy). Hence, Dwarf Yellow = 1/4 = 25%."
+      },
+      {
+        id: 40,
+        topic: "Duplicate Recessive Epistasis",
+        type: "mcq",
+        text: "Duplicate recessive epistasis is an alternative term for which of the following classical gene interactions?",
+        options: [
+          "Complementary gene interaction (9:7)",
+          "Supplementary gene interaction (9:3:4)",
+          "Masking gene action (12:3:1)",
+          "Inhibitory gene action (13:3)"
+        ],
+        correct: 0,
+        explanation: "Complementary gene interaction (9:7) is termed Duplicate Recessive Epistasis because the homozygous recessive condition at EITHER locus (aa or bb) is epistatic and produces the recessive phenotype."
+      },
+      {
+        id: 41,
+        topic: "Mendelian Rediscovery",
+        type: "match",
+        text: `Match List-I (Rediscoverer of Mendelism in 1900) with List-II (Country of Origin):
+        <table class="w-full mt-2 border-collapse border border-slate-300 text-xs sm:text-sm">
+          <tr class="bg-slate-100"><th class="border border-slate-300 p-1.5">List-I (Scientist)</th><th class="border border-slate-300 p-1.5">List-II (Country)</th></tr>
+          <tr><td class="border border-slate-300 p-1">A. Hugo de Vries</td><td class="border border-slate-300 p-1">I. Germany</td></tr>
+          <tr><td class="border border-slate-300 p-1">B. Carl Correns</td><td class="border border-slate-300 p-1">II. Austria</td></tr>
+          <tr><td class="border border-slate-300 p-1">C. Erich von Tschermak-Seysenegg</td><td class="border border-slate-300 p-1">III. The Netherlands (Holland)</td></tr>
+        </table>`,
+        options: [
+          "A-III, B-I, C-II",
+          "A-I, B-III, C-II",
+          "A-II, B-I, C-III",
+          "A-III, B-II, C-I"
+        ],
+        correct: 0,
+        explanation: "In 1900, Mendel's laws were independently rediscovered by Hugo de Vries (Holland), Carl Correns (Germany), and Erich von Tschermak (Austria). Hence A-III, B-I, C-II."
+      },
+      {
+        id: 42,
+        topic: "Epistasis Matrix",
+        type: "statement",
+        text: `Given below are two statements regarding Dihybrid F2 ratios:<br>
+        <strong>Statement I:</strong> All modified epistatic ratios (9:7, 9:3:4, 12:3:1, 15:1, 13:3, 9:6:1) are mathematical partitions or re-groupings of the 16 combinations of the classical 9:3:3:1 dihybrid ratio.<br>
+        <strong>Statement II:</strong> In all these epistatic interactions, the genotypic ratio in F2 remains identical to the classical Mendelian genotypic ratio (1:2:1:2:4:2:1:2:1).`,
+        options: [
+          "Both Statement I and Statement II are true",
+          "Both Statement I and Statement II are false",
+          "Statement I is true but Statement II is false",
+          "Statement I is false but Statement II is true"
+        ],
+        correct: 0,
+        explanation: "Both statements are completely true. Epistasis alters only the phenotypic manifestation; independent assortment of alleles at the two loci during gametogenesis and fertilization remains unaltered, preserving the 1:2:1:2:4:2:1:2:1 genotypic ratio."
+      },
+      {
+        id: 43,
+        topic: "Molecular Basis of Mendel's Wrinkled Seed",
+        type: "mcq",
+        text: "The molecular basis of Mendel's wrinkled seed (<em>r</em> allele) in <em>Pisum sativum</em>, as discovered by Bhattacharyya et al. (1990), is caused by:",
+        options: [
+          "An 800-bp insertion sequence (transposon-like element) in the gene encoding Starch Branching Enzyme I (SBEI)",
+          "A single nucleotide substitution causing a nonsense stop codon in the Le gene",
+          "A deletion of 5 base pairs in the chlorophyll catabolism pathway gene",
+          "A point mutation in the gibberellin 20-oxidase gene"
+        ],
+        correct: 0,
+        explanation: "Bhattacharyya et al. (1990) revealed that the rugosus (r) wrinkled mutation in pea is caused by an ~800 bp transposon-like insertion into the gene encoding Starch Branching Enzyme I (SBEI), leading to higher free sucrose and wrinkled seed coat upon drying."
+      },
+      {
+        id: 44,
+        topic: "Molecular Basis of Mendel's Dwarf Pea",
+        type: "mcq",
+        text: "The dwarf stature of garden pea studied by Mendel (<em>le</em> mutant) is due to a single nucleotide substitution that inactivates which specific enzyme in the phytohormone pathway?",
+        options: [
+          "Gibberellin 3-beta-hydroxylase (converting GA20 to bioactive GA1)",
+          "Gibberellin 20-oxidase",
+          "Ent-kaurene synthase",
+          "Zeatin O-glucosyltransferase"
+        ],
+        correct: 0,
+        explanation: "Lester et al. (1997) and Martin et al. (1997) proved that the Le gene encodes GA 3-beta-hydroxylase, which converts inactive GA20 into bioactive GA1. In le/le dwarf plants, an Ala-to-Thr substitution inactivates this enzyme."
+      },
+      {
+        id: 45,
+        topic: "Independent Assortment Exceptions",
+        type: "assertion",
+        text: `Given below are two statements, one is labelled as Assertion (A) and the other as Reason (R):<br>
+        <strong>Assertion (A):</strong> Mendel failed to discover genetic linkage despite studying two traits located on Chromosome 4 (plant height <em>Le</em> and pod shape <em>V</em>) and two on Chromosome 1 (cotyledon color <em>I</em> and seed coat color <em>A</em>).<br>
+        <strong>Reason (R):</strong> Mendel never published crosses involving <em>Le</em> and <em>V</em> together, and the distance between the two loci on Chromosome 1 is so great (>50 cM) that they behave as if independently assorting.`,
+        options: [
+          "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+          "Both (A) and (R) are correct but (R) is NOT the correct explanation of (A)",
+          "(A) is correct but (R) is not correct",
+          "(A) is not correct but (R) is correct"
+        ],
+        correct: 0,
+        explanation: "Both (A) and (R) are true. S. Blixt demonstrated that Mendel did not test V (pod shape) and Le (stem length) together. On Chromosome 1, the distance between I and A is ~200 cM (exceeding the 50% recombination ceiling), showing independent assortment."
+      }
+    ];
+
+    /* State variables */
+    let currentQuestionIdx = 0;
+    let userAnswers = new Array(questions.length).fill(null);
+    let reviewMarked = new Array(questions.length).fill(false);
+    let visited = new Array(questions.length).fill(false);
+    visited[0] = true;
+
+    const TOTAL_SECONDS = 45 * 60; // 45 Minutes
+    let secondsLeft = TOTAL_SECONDS;
+    let timerInterval = null;
+    let isExamFinished = false;
+
+    // Window Init
+    window.onload = function() {
+      initTimer();
+      renderPalette();
+      renderCurrentQuestion();
+      updatePaletteCounters();
+    };
+
+    /* Timer Functions */
+    function initTimer() {
+      timerInterval = setInterval(() => {
+        if (secondsLeft <= 0) {
+          clearInterval(timerInterval);
+          finalizeAndScoreExam();
+          return;
+        }
+        secondsLeft--;
+        const mins = Math.floor(secondsLeft / 60);
+        const secs = secondsLeft % 60;
+        document.getElementById("timerDisplay").innerText = 
+          `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        
+        if (secondsLeft <= 300) { // 5 minutes left
+          document.getElementById("timerDisplay").classList.add("text-rose-400", "animate-ping");
+        }
+      }, 1000);
+    }
+
+    /* Render Current Question */
+    function renderCurrentQuestion() {
+      const q = questions[currentQuestionIdx];
+      visited[currentQuestionIdx] = true;
+      
+      document.getElementById("currentQNum").innerText = q.id;
+      document.getElementById("questionTopicBadge").innerText = q.topic;
+
+      const container = document.getElementById("questionContentArea");
+      const userSelected = userAnswers[currentQuestionIdx];
+
+      let optionsHTML = "";
+      q.options.forEach((opt, idx) => {
+        const isChecked = userSelected === idx ? "checked" : "";
+        optionsHTML += `
+          <div class="custom-radio">
+            <input type="radio" id="opt_${idx}" name="q_option" value="${idx}" class="hidden" ${isChecked} onchange="selectOption(${idx})">
+            <label for="opt_${idx}" class="flex items-start gap-3 p-3 sm:p-3.5 my-2 border rounded-xl cursor-pointer hover:bg-slate-50 transition border-slate-200">
+              <span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center font-bold text-xs text-slate-600 bg-white flex-shrink-0 mt-0.5">
+                ${String.fromCharCode(65 + idx)}
+              </span>
+              <div class="text-xs sm:text-sm text-slate-800 leading-relaxed">${opt}</div>
+            </label>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="mb-4">
+          <div class="text-xs sm:text-sm font-semibold text-slate-800 leading-relaxed mb-3">
+            ${q.text}
+          </div>
+          <div class="mt-4 space-y-1">
+            ${optionsHTML}
+          </div>
+        </div>
+      `;
+
+      // Button states
+      document.getElementById("prevBtn").disabled = (currentQuestionIdx === 0);
+      document.getElementById("nextBtn").innerHTML = (currentQuestionIdx === questions.length - 1) 
+        ? `Submit & Next <i class="fa-solid fa-check ml-1"></i>` 
+        : `Save & Next <i class="fa-solid fa-chevron-right ml-1"></i>`;
+
+      renderPalette();
+      updatePaletteCounters();
+    }
+
+    /* Option Selection */
+    function selectOption(idx) {
+      userAnswers[currentQuestionIdx] = idx;
+      renderPalette();
+      updatePaletteCounters();
+    }
+
+    function clearResponse() {
+      userAnswers[currentQuestionIdx] = null;
+      renderCurrentQuestion();
+      updatePaletteCounters();
+    }
+
+    function markForReview() {
+      reviewMarked[currentQuestionIdx] = !reviewMarked[currentQuestionIdx];
+      navigateQuestion(1);
+    }
+
+    function saveAndNext() {
+      navigateQuestion(1);
+    }
+
+    function navigateQuestion(step) {
+      const nextIdx = currentQuestionIdx + step;
+      if (nextIdx >= 0 && nextIdx < questions.length) {
+        currentQuestionIdx = nextIdx;
+        renderCurrentQuestion();
+      } else if (nextIdx >= questions.length) {
+        confirmSubmitModal();
+      }
+    }
+
+    function jumpToQuestion(idx) {
+      currentQuestionIdx = idx;
+      renderCurrentQuestion();
+    }
+
+    /* Palette Rendering & Statuses */
+    function renderPalette() {
+      const grid = document.getElementById("paletteGrid");
+      grid.innerHTML = "";
+
+      questions.forEach((q, i) => {
+        const isCurrent = (i === currentQuestionIdx);
+        const isAns = (userAnswers[i] !== null);
+        const isRev = reviewMarked[i];
+        const isVis = visited[i];
+
+        let bgClass = "bg-slate-200 text-slate-700 hover:bg-slate-300"; // not visited
+        if (isAns && isRev) {
+          bgClass = "bg-purple-600 ring-2 ring-emerald-500 text-white font-bold";
+        } else if (isRev) {
+          bgClass = "bg-purple-600 text-white font-bold";
+        } else if (isAns) {
+          bgClass = "bg-emerald-600 text-white font-bold";
+        } else if (isVis) {
+          bgClass = "bg-rose-500 text-white font-bold";
+        }
+
+        const borderClass = isCurrent ? "ring-2 ring-blue-600 ring-offset-1 scale-105" : "";
+
+        const btn = document.createElement("button");
+        btn.className = `w-8 h-8 rounded-lg text-xs font-semibold flex items-center justify-center transition-all ${bgClass} ${borderClass}`;
+        btn.innerText = (i + 1);
+        btn.onclick = () => jumpToQuestion(i);
+        grid.appendChild(btn);
+      });
+    }
+
+    function updatePaletteCounters() {
+      let answered = 0;
+      let notAnswered = 0;
+      let marked = 0;
+      let ansMarked = 0;
+
+      for (let i = 0; i < questions.length; i++) {
+        const isAns = userAnswers[i] !== null;
+        const isRev = reviewMarked[i];
+        if (isAns && isRev) ansMarked++;
+        else if (isRev) marked++;
+        else if (isAns) answered++;
+        else notAnswered++;
+      }
+
+      document.getElementById("statAnswered").innerText = answered;
+      document.getElementById("statNotAnswered").innerText = notAnswered;
+      document.getElementById("statMarked").innerText = marked;
+      document.getElementById("statAnsMarked").innerText = ansMarked;
+
+      document.getElementById("modalAnsCount").innerText = (answered + ansMarked);
+      document.getElementById("modalUnansCount").innerText = notAnswered;
+      document.getElementById("modalMarkCount").innerText = (marked + ansMarked);
+    }
+
+    /* Modal submission dialogs */
+    function confirmSubmitModal() {
+      document.getElementById("confirmModal").classList.remove("hidden");
+    }
+
+    function closeConfirmModal() {
+      document.getElementById("confirmModal").classList.add("hidden");
+    }
+
+    /* Calculate results and show comprehensive answer key */
+    function finalizeAndScoreExam() {
+      clearInterval(timerInterval);
+      isExamFinished = true;
+      closeConfirmModal();
+
+      let correctCount = 0;
+      let incorrectCount = 0;
+      let unattemptedCount = 0;
+
+      questions.forEach((q, idx) => {
+        const ans = userAnswers[idx];
+        if (ans === null) {
+          unattemptedCount++;
+        } else if (ans === q.correct) {
+          correctCount++;
+        } else {
+          incorrectCount++;
+        }
+      });
+
+      const totalMarks = (correctCount * 4) - (incorrectCount * 1);
+      const attempted = correctCount + incorrectCount;
+      const accuracy = attempted > 0 ? ((correctCount / attempted) * 100).toFixed(1) : 0;
+      const percentage = ((totalMarks / 180) * 100).toFixed(1);
+
+      document.getElementById("resScore").innerText = totalMarks;
+      document.getElementById("resPercentile").innerText = `Total Score: ${percentage}% of 180`;
+      document.getElementById("resAccuracy").innerText = `${accuracy}%`;
+      document.getElementById("resAttemptedCount").innerText = `${attempted} / 45 Attempted`;
+      document.getElementById("resCorrect").innerText = correctCount;
+      document.getElementById("resPosMarks").innerText = correctCount * 4;
+      document.getElementById("resIncorrect").innerText = incorrectCount;
+      document.getElementById("resNegMarks").innerText = incorrectCount * 1;
+
+      renderSolutionReview('all');
+      document.getElementById("resultModal").classList.remove("hidden");
+    }
+
+    /* Render Review Cards */
+    function renderSolutionReview(filter = 'all') {
+      const container = document.getElementById("solutionReviewContainer");
+      container.innerHTML = "";
+
+      questions.forEach((q, idx) => {
+        const uAns = userAnswers[idx];
+        const isCorrect = (uAns === q.correct);
+        const isUnattempted = (uAns === null);
+
+        if (filter === 'correct' && !isCorrect) return;
+        if (filter === 'incorrect' && (isCorrect || isUnattempted)) return;
+        if (filter === 'unanswered' && !isUnattempted) return;
+
+        let statusBadge = "";
+        let borderCardColor = "";
+        if (isCorrect) {
+          statusBadge = `<span class="bg-emerald-100 text-emerald-800 font-bold text-[11px] px-2 py-0.5 rounded border border-emerald-300"><i class="fa-solid fa-check mr-1"></i> Correct (+4)</span>`;
+          borderCardColor = "border-emerald-300 bg-emerald-50/20";
+        } else if (isUnattempted) {
+          statusBadge = `<span class="bg-slate-100 text-slate-700 font-bold text-[11px] px-2 py-0.5 rounded border border-slate-300"><i class="fa-regular fa-circle mr-1"></i> Unattempted (0)</span>`;
+          borderCardColor = "border-slate-300 bg-white";
+        } else {
+          statusBadge = `<span class="bg-rose-100 text-rose-800 font-bold text-[11px] px-2 py-0.5 rounded border border-rose-300"><i class="fa-solid fa-xmark mr-1"></i> Incorrect (-1)</span>`;
+          borderCardColor = "border-rose-300 bg-rose-50/20";
+        }
+
+        const card = document.createElement("div");
+        card.className = `p-4 sm:p-5 rounded-xl border ${borderCardColor} space-y-3`;
+
+        const userSelectionText = (uAns !== null) 
+          ? `(${String.fromCharCode(65 + uAns)}) ${q.options[uAns]}`
+          : `<span class="italic text-slate-400">None</span>`;
+
+        const correctSelectionText = `(${String.fromCharCode(65 + q.correct)}) ${q.options[q.correct]}`;
+
+        card.innerHTML = `
+          <div class="flex justify-between items-start gap-2 flex-wrap">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-xs bg-slate-800 text-white px-2 py-0.5 rounded">Q.${q.id}</span>
+              <span class="text-xs font-semibold text-slate-600">${q.topic}</span>
+            </div>
+            ${statusBadge}
+          </div>
+
+          <div class="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed">
+            ${q.text}
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+            <div class="p-2 rounded bg-white border border-slate-200">
+              <span class="text-slate-500 font-semibold block text-[10px] uppercase">Your Selection:</span>
+              <span class="${isCorrect ? 'text-emerald-700 font-bold' : (isUnattempted ? 'text-slate-500' : 'text-rose-700 font-bold')}">${userSelectionText}</span>
+            </div>
+            <div class="p-2 rounded bg-white border border-emerald-200">
+              <span class="text-emerald-700 font-semibold block text-[10px] uppercase">Correct Answer:</span>
+              <span class="text-emerald-800 font-bold">${correctSelectionText}</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-100 p-3 rounded-lg border border-slate-200 text-xs text-slate-700 leading-relaxed">
+            <b class="text-slate-900 flex items-center gap-1.5 mb-1"><i class="fa-solid fa-lightbulb text-amber-500"></i> ICAR High-Yield Reference:</b>
+            ${q.explanation}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function filterReview(type) {
+      document.querySelectorAll('.reviewFilterBtn').forEach(btn => {
+        if (btn.getAttribute('data-filter') === type) {
+          btn.className = "reviewFilterBtn px-2.5 py-1 rounded bg-slate-800 text-white font-medium";
+        } else {
+          btn.className = "reviewFilterBtn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium";
+        }
+      });
+      renderSolutionReview(type);
+    }
+
+    function closeResultModal() {
+      document.getElementById("resultModal").classList.add("hidden");
+    }
+
+    function resetAndRetakeTest() {
+      currentQuestionIdx = 0;
+      userAnswers = new Array(questions.length).fill(null);
+      reviewMarked = new Array(questions.length).fill(false);
+      visited = new Array(questions.length).fill(false);
+      visited[0] = true;
+      secondsLeft = TOTAL_SECONDS;
+      isExamFinished = false;
+
+      document.getElementById("resultModal").classList.add("hidden");
+      initTimer();
+      renderPalette();
+      renderCurrentQuestion();
+      updatePaletteCounters();
+    }
+  </script>
+</body>
+</html>
